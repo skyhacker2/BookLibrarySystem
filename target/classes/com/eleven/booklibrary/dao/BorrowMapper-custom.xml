@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.eleven.booklibrary.dao.BorrowMapper" >
+	<select id="selectByPage" resultMap="BaseResultMap">
+		select * from borrow
+		<if test="offset != null and length != null">
+		limit #{offset}, #{length}
+		</if>
+	</select>
+	<select id="selectByCardNumber" resultMap="BaseResultMap">
+		select * from borrow where borrowerNumber=#{cardNumber}
+		limit #{offset}, #{length}
+	</select>
+	<select id="selectByBookNumber" resultMap="BaseResultMap">
+		select * from borrow where bookNumber=#{bookNumber}
+		limit #{offset}, #{length}
+	</select>
+</mapper>

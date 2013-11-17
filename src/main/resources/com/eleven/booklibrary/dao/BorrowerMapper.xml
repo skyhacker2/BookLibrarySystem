@@ -1,0 +1,305 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.eleven.booklibrary.dao.BorrowerMapper" >
+  <resultMap id="BaseResultMap" type="com.eleven.booklibrary.model.Borrower" >
+    <id column="card_number" property="cardNumber" jdbcType="DECIMAL" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="sex" property="sex" jdbcType="VARCHAR" />
+    <result column="id_card_number" property="idCardNumber" jdbcType="VARCHAR" />
+    <result column="work_place" property="workPlace" jdbcType="VARCHAR" />
+    <result column="address" property="address" jdbcType="VARCHAR" />
+    <result column="phone" property="phone" jdbcType="VARCHAR" />
+    <result column="type" property="type" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="borrowed" property="borrowed" jdbcType="INTEGER" />
+    <result column="is_lost" property="isLost" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    card_number, name, sex, id_card_number, work_place, address, phone, type, create_time, 
+    borrowed, is_lost
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.eleven.booklibrary.model.BorrowerExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from borrower
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from borrower
+    where card_number = #{cardNumber,jdbcType=DECIMAL}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from borrower
+    where card_number = #{cardNumber,jdbcType=DECIMAL}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.eleven.booklibrary.model.BorrowerExample" >
+    delete from borrower
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.eleven.booklibrary.model.Borrower" >
+    insert into borrower (card_number, name, sex, 
+      id_card_number, work_place, address, 
+      phone, type, create_time, 
+      borrowed, is_lost)
+    values (#{cardNumber,jdbcType=DECIMAL}, #{name,jdbcType=VARCHAR}, #{sex,jdbcType=VARCHAR}, 
+      #{idCardNumber,jdbcType=VARCHAR}, #{workPlace,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR}, 
+      #{phone,jdbcType=VARCHAR}, #{type,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{borrowed,jdbcType=INTEGER}, #{isLost,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.eleven.booklibrary.model.Borrower" >
+    insert into borrower
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="cardNumber != null" >
+        card_number,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="sex != null" >
+        sex,
+      </if>
+      <if test="idCardNumber != null" >
+        id_card_number,
+      </if>
+      <if test="workPlace != null" >
+        work_place,
+      </if>
+      <if test="address != null" >
+        address,
+      </if>
+      <if test="phone != null" >
+        phone,
+      </if>
+      <if test="type != null" >
+        type,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="borrowed != null" >
+        borrowed,
+      </if>
+      <if test="isLost != null" >
+        is_lost,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="cardNumber != null" >
+        #{cardNumber,jdbcType=DECIMAL},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="sex != null" >
+        #{sex,jdbcType=VARCHAR},
+      </if>
+      <if test="idCardNumber != null" >
+        #{idCardNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="workPlace != null" >
+        #{workPlace,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null" >
+        #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null" >
+        #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null" >
+        #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="borrowed != null" >
+        #{borrowed,jdbcType=INTEGER},
+      </if>
+      <if test="isLost != null" >
+        #{isLost,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.eleven.booklibrary.model.BorrowerExample" resultType="java.lang.Integer" >
+    select count(*) from borrower
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update borrower
+    <set >
+      <if test="record.cardNumber != null" >
+        card_number = #{record.cardNumber,jdbcType=DECIMAL},
+      </if>
+      <if test="record.name != null" >
+        name = #{record.name,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sex != null" >
+        sex = #{record.sex,jdbcType=VARCHAR},
+      </if>
+      <if test="record.idCardNumber != null" >
+        id_card_number = #{record.idCardNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="record.workPlace != null" >
+        work_place = #{record.workPlace,jdbcType=VARCHAR},
+      </if>
+      <if test="record.address != null" >
+        address = #{record.address,jdbcType=VARCHAR},
+      </if>
+      <if test="record.phone != null" >
+        phone = #{record.phone,jdbcType=VARCHAR},
+      </if>
+      <if test="record.type != null" >
+        type = #{record.type,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createTime != null" >
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.borrowed != null" >
+        borrowed = #{record.borrowed,jdbcType=INTEGER},
+      </if>
+      <if test="record.isLost != null" >
+        is_lost = #{record.isLost,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update borrower
+    set card_number = #{record.cardNumber,jdbcType=DECIMAL},
+      name = #{record.name,jdbcType=VARCHAR},
+      sex = #{record.sex,jdbcType=VARCHAR},
+      id_card_number = #{record.idCardNumber,jdbcType=VARCHAR},
+      work_place = #{record.workPlace,jdbcType=VARCHAR},
+      address = #{record.address,jdbcType=VARCHAR},
+      phone = #{record.phone,jdbcType=VARCHAR},
+      type = #{record.type,jdbcType=VARCHAR},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      borrowed = #{record.borrowed,jdbcType=INTEGER},
+      is_lost = #{record.isLost,jdbcType=INTEGER}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.eleven.booklibrary.model.Borrower" >
+    update borrower
+    <set >
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="sex != null" >
+        sex = #{sex,jdbcType=VARCHAR},
+      </if>
+      <if test="idCardNumber != null" >
+        id_card_number = #{idCardNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="workPlace != null" >
+        work_place = #{workPlace,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null" >
+        address = #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null" >
+        phone = #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null" >
+        type = #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="borrowed != null" >
+        borrowed = #{borrowed,jdbcType=INTEGER},
+      </if>
+      <if test="isLost != null" >
+        is_lost = #{isLost,jdbcType=INTEGER},
+      </if>
+    </set>
+    where card_number = #{cardNumber,jdbcType=DECIMAL}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.eleven.booklibrary.model.Borrower" >
+    update borrower
+    set name = #{name,jdbcType=VARCHAR},
+      sex = #{sex,jdbcType=VARCHAR},
+      id_card_number = #{idCardNumber,jdbcType=VARCHAR},
+      work_place = #{workPlace,jdbcType=VARCHAR},
+      address = #{address,jdbcType=VARCHAR},
+      phone = #{phone,jdbcType=VARCHAR},
+      type = #{type,jdbcType=VARCHAR},
+      borrowed = #{borrowed,jdbcType=INTEGER},
+      is_lost = #{isLost,jdbcType=INTEGER}
+    where card_number = #{cardNumber,jdbcType=DECIMAL}
+  </update>
+</mapper>

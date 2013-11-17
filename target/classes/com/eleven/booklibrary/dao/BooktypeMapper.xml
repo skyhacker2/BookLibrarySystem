@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.eleven.booklibrary.dao.BooktypeMapper" >
+  <resultMap id="BaseResultMap" type="com.eleven.booklibrary.model.Booktype" >
+    <id column="type" property="type" jdbcType="VARCHAR" />
+    <result column="borrow_day" property="borrowDay" jdbcType="INTEGER" />
+    <result column="day_fine" property="dayFine" jdbcType="DECIMAL" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    type, borrow_day, day_fine
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.eleven.booklibrary.model.BooktypeExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from booktype
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from booktype
+    where type = #{type,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from booktype
+    where type = #{type,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.eleven.booklibrary.model.BooktypeExample" >
+    delete from booktype
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.eleven.booklibrary.model.Booktype" >
+    insert into booktype (type, borrow_day, day_fine
+      )
+    values (#{type,jdbcType=VARCHAR}, #{borrowDay,jdbcType=INTEGER}, #{dayFine,jdbcType=DECIMAL}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.eleven.booklibrary.model.Booktype" >
+    insert into booktype
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="type != null" >
+        type,
+      </if>
+      <if test="borrowDay != null" >
+        borrow_day,
+      </if>
+      <if test="dayFine != null" >
+        day_fine,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="type != null" >
+        #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="borrowDay != null" >
+        #{borrowDay,jdbcType=INTEGER},
+      </if>
+      <if test="dayFine != null" >
+        #{dayFine,jdbcType=DECIMAL},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.eleven.booklibrary.model.BooktypeExample" resultType="java.lang.Integer" >
+    select count(*) from booktype
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update booktype
+    <set >
+      <if test="record.type != null" >
+        type = #{record.type,jdbcType=VARCHAR},
+      </if>
+      <if test="record.borrowDay != null" >
+        borrow_day = #{record.borrowDay,jdbcType=INTEGER},
+      </if>
+      <if test="record.dayFine != null" >
+        day_fine = #{record.dayFine,jdbcType=DECIMAL},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update booktype
+    set type = #{record.type,jdbcType=VARCHAR},
+      borrow_day = #{record.borrowDay,jdbcType=INTEGER},
+      day_fine = #{record.dayFine,jdbcType=DECIMAL}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.eleven.booklibrary.model.Booktype" >
+    update booktype
+    <set >
+      <if test="borrowDay != null" >
+        borrow_day = #{borrowDay,jdbcType=INTEGER},
+      </if>
+      <if test="dayFine != null" >
+        day_fine = #{dayFine,jdbcType=DECIMAL},
+      </if>
+    </set>
+    where type = #{type,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.eleven.booklibrary.model.Booktype" >
+    update booktype
+    set borrow_day = #{borrowDay,jdbcType=INTEGER},
+      day_fine = #{dayFine,jdbcType=DECIMAL}
+    where type = #{type,jdbcType=VARCHAR}
+  </update>
+</mapper>

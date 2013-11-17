@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>   
+<!DOCTYPE generatorConfiguration   
+  PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"  
+  "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+
+<generatorConfiguration>
+
+	<classPathEntry location="E:\Maven\repo\mysql\mysql-connector-java\5.1.26\mysql-connector-java-5.1.26.jar" />
+	
+	<context id="MySqlTables" targetRuntime="MyBatis3">
+		<!-- 关闭注解信息 -->
+		<commentGenerator>  
+        	<property name="suppressAllComments" value="true" />  
+		</commentGenerator>
+
+		<jdbcConnection driverClass="com.mysql.jdbc.Driver"
+			connectionURL="jdbc:mysql://localhost:3306/library" userId="root"
+			password="root">
+		</jdbcConnection>
+
+		<javaTypeResolver>
+			<property name="forceBigDecimals" value="false" />
+		</javaTypeResolver>
+
+		<!-- model的配置 -->
+		<javaModelGenerator targetPackage="com.eleven.booklibrary.model"
+			targetProject=".\src\main\java">
+			<property name="enableSubPackages" value="true" />
+			<property name="trimStrings" value="true" />
+		</javaModelGenerator>
+
+		<!-- mybatis的xml的配置 -->
+		<sqlMapGenerator targetPackage="com.eleven.booklibrary.dao"
+			targetProject=".\src\main\resources">
+			<property name="enableSubPackages" value="true" />
+		</sqlMapGenerator>
+		
+		<!-- mapper的配置 -->
+		<javaClientGenerator type="XMLMAPPER"
+			targetPackage="com.eleven.booklibrary.dao" targetProject=".\src\main\java">
+			<property name="enableSubPackages" value="true" />
+		</javaClientGenerator>
+		<table tableName="user" domainObjectName="User">
+		</table>
+		<table tableName="book" domainObjectName="Book"></table>
+		<table tableName="booktype" domainObjectName="Booktype"></table>
+		<table tableName="borrow" domainObjectName="Borrow"></table>
+		<table tableName="borrower" domainObjectName="Borrower"></table>
+		<table tableName="borrowertype" domainObjectName="Borrowertype"></table>
+		
+	</context>
+</generatorConfiguration> 
