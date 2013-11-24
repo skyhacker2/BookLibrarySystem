@@ -57,7 +57,7 @@ public class UserController {
   @RequestMapping(value="/login.do", method = RequestMethod.GET)
   public String login(HttpServletRequest request) {
     request.getSession().setAttribute("title", "登入");
-    return "user/login";
+    return "user/login2";
   }
   
   /**
