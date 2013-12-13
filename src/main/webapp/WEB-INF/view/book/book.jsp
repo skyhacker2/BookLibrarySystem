@@ -31,17 +31,27 @@
 					<h1>搜索结果<small>${searchName } <span class="search-type">${searchType}</span> ${pagination.items}条记录</small></h1>
 					<hr>
 					<%@ include file="list.jsp" %>
+					<%@ include file="../pagination.jsp" %>
 					<script>
+						function pageClick(page) {
+							console.log(page);
+							$(".page").val(page);
+							$(".book-type-select").val($("searchType"));
+							$(".book-form-search").submit();
+						}
 						$(document).ready(function(){
 							$.each($(".book-image"), function(i,x) {
 								$.post(baseUrl + "book/getBookImage.do",{id:x.name},function(data){
 									x.src = data.images.large;
 								},'json');
 							});
+							
 						});
 					</script>
+					
 				</c:when>
 			</c:choose>
+			
 		</div>
 	</div>
 </div>

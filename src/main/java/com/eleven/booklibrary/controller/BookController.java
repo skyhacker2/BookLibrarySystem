@@ -37,7 +37,7 @@ public class BookController {
     List<Book> books = new ArrayList<Book>();
     Pagination pagination = new Pagination();
     pagination.setCurPage(1L);
-    pagination.setPageSize(100L);
+    pagination.setPageSize(8L);
     books = bookService.selectBookByName("", "", pagination);
     pagination = bookService.count("","", pagination);
     modelMap.addAttribute("books", books);
@@ -53,8 +53,8 @@ public class BookController {
     return list;
   }
   
-  @RequestMapping(value="/searchBook", method = RequestMethod.POST)
-  public String searchBook(String query,String bookType, ModelMap modelMap) {
+  @RequestMapping(value="/searchBook", method = RequestMethod.GET)
+  public String searchBook(String query, String bookType, String page, ModelMap modelMap) {
     System.out.println("query=" + query);
     List<Book> books = new ArrayList<Book>();
     try {
@@ -62,15 +62,17 @@ public class BookController {
       Book book = bookService.selectBook(number, bookType);
       modelMap.addAttribute("book", book);
       modelMap.addAttribute("bookResult", true);
+      modelMap.addAttribute("searchType", bookType);
     } catch(NumberFormatException e) {
       Pagination pagination = new Pagination();
-      pagination.setCurPage(1L);
-      pagination.setPageSize(100L);
+      pagination.setCurPage(Long.parseLong(page));
+      pagination.setPageSize(8L);
       books = bookService.selectBookByName(query, bookType, pagination);
       pagination = bookService.count(query,"", pagination);
       modelMap.addAttribute("books", books);
       modelMap.addAttribute("pagination", pagination);
       modelMap.addAttribute("searchName", query);
+      modelMap.addAttribute("searchType", bookType);
     }
     return "book/book";
   }
